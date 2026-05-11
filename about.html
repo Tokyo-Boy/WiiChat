@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | WiiChat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --wii-blue: #0070f3;
+            --wii-blue-soft: rgba(0, 112, 243, 0.08);
+            --wii-dark: #000000;
+            --text-main: #111111;
+            --text-secondary: #666666;
+            --bg-gray: #f9fafb;
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            background-color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- MODERN NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px) saturate(180%);
+            position: fixed;
+            width: 92%;
+            max-width: 1200px;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2000;
+            border-radius: 100px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            transition: var(--transition);
+        }
+
+        nav.scrolled {
+            width: 100%;
+            top: 0;
+            border-radius: 0;
+            border-left: none;
+            border-right: none;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--wii-dark);
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.8px;
+        }
+
+        .logo img {
+            height: 32px;
+            width: auto;
+        }
+
+        .nav-links { display: flex; align-items: center; gap: 4px; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            padding: 10px 18px;
+            font-size: 14px;
+            border-radius: 50px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--wii-blue);
+            background: var(--wii-blue-soft);
+        }
+
+        .nav-links a.cta-nav {
+            background: var(--wii-dark);
+            color: white;
+            margin-left: 10px;
+        }
+
+        /* --- HAMBURGER --- */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            width: 28px;
+            height: 20px;
+            position: relative;
+            z-index: 2100;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: var(--wii-dark);
+            border-radius: 10px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- ABOUT HERO --- */
+        .hero-wrapper {
+            width: 100%;
+            height: 70vh;
+            background: var(--wii-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
+                              url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2070');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-text-overlay {
+            position: relative;
+            text-align: center;
+            color: white;
+            padding: 0 24px;
+            max-width: 900px;
+            z-index: 10;
+        }
+
+        .hero-text-overlay h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        /* --- CONTENT SECTIONS --- */
+        .section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
+        
+        .mission-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .mission-text h2 { font-size: 36px; font-weight: 800; margin-bottom: 24px; letter-spacing: -1px; }
+        .mission-text p { font-size: 18px; color: var(--text-secondary); margin-bottom: 20px; }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .value-card {
+            padding: 40px;
+            background: var(--bg-gray);
+            border-radius: 24px;
+            transition: var(--transition);
+        }
+
+        .value-card:hover { background: var(--white); box-shadow: 0 20px 40px rgba(0,0,0,0.05); transform: translateY(-5px); }
+        .value-card h3 { font-size: 20px; margin-bottom: 15px; font-weight: 700; }
+        .value-card p { color: var(--text-secondary); font-size: 15px; }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #000;
+            color: #fff;
+            padding: 80px 5% 40px;
+            margin-top: 50px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-brand p { opacity: 0.6; font-size: 14px; max-width: 250px; margin-top: 20px; }
+        .footer-links h5 { font-size: 14px; text-transform: uppercase; margin-bottom: 25px; letter-spacing: 1px; color: #fff; }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { color: #999; text-decoration: none; font-size: 14px; transition: 0.3s; }
+        .footer-links a:hover { color: var(--wii-blue); }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 60px auto 0;
+            padding-top: 30px;
+            border-top: 1px solid #222;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .mission-grid, .values-grid { grid-template-columns: 1fr; gap: 40px; }
+            .nav-links {
+                position: fixed; top: 0; right: -100%; height: 100vh; width: 100%;
+                background: white; flex-direction: column; justify-content: center;
+                transition: var(--transition); z-index: 2050;
+            }
+            .nav-links.active { right: 0; }
+            .hamburger { display: flex; }
+            .hamburger.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+            .hamburger.active span:nth-child(2) { opacity: 0; }
+            .hamburger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <a href="index.html" class="logo">
+            <img src="public/images/WiiChat3.png" alt="Logo">
+            WiiChat
+        </a>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html" style="color: var(--wii-blue);">About</a>
+            <a href="#">Engineering</a>
+            <a href="#">Safety</a>
+            <a href="#">Careers</a>
+            <a href="#" class="cta-nav">Get Started</a>
+        </div>
+    </nav>
+
+    <div class="hero-wrapper">
+        <div class="hero-bg"></div>
+        <div class="hero-text-overlay">
+            <h1>We are redefining how the world talks.</h1>
+            <p style="font-size: 1.2rem; opacity: 0.9;">WiiChat is more than a platform. It's a global effort to make digital communication as natural and safe as a face-to-face conversation.</p>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="mission-grid">
+            <div class="mission-text">
+                <h2>Our Mission</h2>
+                <p>Founded in 2024, WiiChat began with a simple question: Why has digital communication become so noisy and fragmented?</p>
+                <p>Our team of engineers and designers set out to build a "refined" infrastructure. One that prioritizes the user's intent over algorithms and privacy over data collection.</p>
+            </div>
+            <div style="background: var(--bg-gray); height: 400px; border-radius: 32px; overflow: hidden;">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=2070" style="width: 100%; height: 100%; object-fit: cover;" alt="Team Collaboration">
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: #fff; padding-top: 0;">
+        <h2 style="text-align: center; margin-bottom: 50px; font-size: 32px;">Our Core Values</h2>
+        <div class="values-grid">
+            <div class="value-card">
+                <h3>Radical Transparency</h3>
+                <p>We believe you should know exactly how your data is handled. Our engineering reports are public, and our privacy policies are written for humans, not lawyers.</p>
+            </div>
+            <div class="value-card">
+                <h3>Intentional Design</h3>
+                <p>Every feature we add must serve a purpose. We don't build for "engagement metrics"—we build for meaningful human connection.</p>
+            </div>
+            <div class="value-card">
+                <h3>Global Accessibility</h3>
+                <p>Communication is a right. We optimize our infrastructure so that WiiChat works perfectly on any device, in any corner of the globe.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="text-align: center; border-top: 1px solid #eee;">
+        <h2 style="margin-bottom: 20px;">Join our journey.</h2>
+        <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 40px;">We’re always looking for brilliant minds to help us build the future of social infrastructure.</p>
+        <a href="#" class="btn btn-blue">View Open Roles</a>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="index.html" class="logo" style="color: #fff;">
+                    WiiChat
+                </a>
+                <p>Advancing the world's communication through secure and intelligent infrastructure.</p>
+            </div>
+            <div class="footer-links">
+                <h5>Platform</h5>
+                <ul>
+                    <li><a href="#">WiiChat for iOS</a></li>
+                    <li><a href="#">WiiChat for Android</a></li>
+                    <li><a href="#">Desktop Web</a></li>
+                    <li><a href="#">Safety Center</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>Resources</h5>
+                <ul>
+                    <li><a href="#">Engineering Blog</a></li>
+                    <li><a href="#">Developer API</a></li>
+                    <li><a href="#">Press Kit</a></li>
+                    <li><a href="#">Brand Assets</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>Company</h5>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Transparency</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 WiiChat. All rights reserved.</p>
+            <div style="display: flex; gap: 20px;">
+                <a href="#" style="color: #666; text-decoration: none;">Privacy</a>
+                <a href="#" style="color: #666; text-decoration: none;">Terms</a>
+                <a href="#" style="color: #666; text-decoration: none;">Cookies</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const navbar = document.getElementById('navbar');
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'initial';
+        });
+
+        // Close menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+                document.body.style.overflow = 'initial';
+            });
+        });
+    </script>
+</body>
+</html>
